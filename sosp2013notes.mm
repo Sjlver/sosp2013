@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="7"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="8"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -489,8 +489,127 @@
 <node TEXT="but sparrow degrades gracefully" ID="ID_553777243" CREATED="1383584141518" MODIFIED="1383584149305"/>
 </node>
 </node>
-<node TEXT="Q" ID="ID_1694083798" CREATED="1383584171924" MODIFIED="1383584174343">
+<node TEXT="Questions" ID="ID_1694083798" CREATED="1383584171924" MODIFIED="1383584213240">
 <node TEXT="all these talks had related work slides at the end..." ID="ID_648887260" CREATED="1383584174836" MODIFIED="1383584183023"/>
+</node>
+<node TEXT="http://github.com/radlab/sparrow" ID="ID_1451348260" CREATED="1383584305275" MODIFIED="1383584312982"/>
+</node>
+<node TEXT="Timecard" POSITION="left" ID="ID_1683521060" CREATED="1383584755326" MODIFIED="1383584757141">
+<edge COLOR="#00007c"/>
+<node TEXT="goal" ID="ID_1875344526" CREATED="1383584816490" MODIFIED="1383584820060">
+<node TEXT="control end-to-end user-perceived delays" ID="ID_924829790" CREATED="1383584820433" MODIFIED="1383584829619"/>
+<node TEXT="response time matters" ID="ID_1458511352" CREATED="1383584841664" MODIFIED="1383584844883">
+<node TEXT="we&apos;ve all seen those spinners..." ID="ID_1231797895" CREATED="1383584845168" MODIFIED="1383584851163"/>
+<node TEXT="interestingly, only maximal request time determines user-perceived delay" ID="ID_89168559" CREATED="1383584858199" MODIFIED="1383584878401"/>
+</node>
+</node>
+<node TEXT="delay components" ID="ID_667084814" CREATED="1383584883125" MODIFIED="1383584886112">
+<node TEXT="app processing" ID="ID_1179547884" CREATED="1383584887036" MODIFIED="1383584890696"/>
+<node TEXT="request transfer" ID="ID_981142955" CREATED="1383584890908" MODIFIED="1383584894232"/>
+<node TEXT="server response time" ID="ID_273286993" CREATED="1383584894452" MODIFIED="1383584897471">
+<node TEXT="this, you can control" ID="ID_67864199" CREATED="1383584897836" MODIFIED="1383584904376">
+<icon BUILTIN="yes"/>
+</node>
+</node>
+</node>
+<node TEXT="today..." ID="ID_837222465" CREATED="1383584923786" MODIFIED="1383584926469">
+<node TEXT="there are SLAs that control server delays" ID="ID_932391572" CREATED="1383584926906" MODIFIED="1383584934141"/>
+<node TEXT="servers can trade-off between quality and delay" ID="ID_1709505990" CREATED="1383584938593" MODIFIED="1383584950476">
+<node TEXT="e.g., by aggregating responses from multiple workers" ID="ID_1029180927" CREATED="1383584957864" MODIFIED="1383584969282"/>
+<node TEXT="more workers answer within deadline -&gt; more precision" ID="ID_921225757" CREATED="1383584969487" MODIFIED="1383584980802"/>
+</node>
+<node TEXT="problems" ID="ID_663495899" CREATED="1383584987342" MODIFIED="1383584988649">
+<node TEXT="external delays are highly variable" ID="ID_1120970275" CREATED="1383584988917" MODIFIED="1383584996769">
+<node TEXT="AppInsight from OSDI 2012" ID="ID_1481559866" CREATED="1383584997189" MODIFIED="1383585004104"/>
+<node TEXT="e.g., network delay different on WiFi, 3G, ..." ID="ID_969120500" CREATED="1383585014980" MODIFIED="1383585027599"/>
+</node>
+<node TEXT="thus, servers should consider external delay" ID="ID_179210381" CREATED="1383585046098" MODIFIED="1383585055413">
+<node TEXT="that is, target an end-to-end deadline" ID="ID_1419244577" CREATED="1383585055713" MODIFIED="1383585064028"/>
+</node>
+</node>
+</node>
+<node TEXT="timecard architecture" ID="ID_562658471" CREATED="1383585078968" MODIFIED="1383585084507">
+<node TEXT="server gets" ID="ID_1782546194" CREATED="1383585084855" MODIFIED="1383585088595">
+<node TEXT="elapsed time so far" ID="ID_851617117" CREATED="1383585089079" MODIFIED="1383585102369">
+<node TEXT="includes request transfer delay" ID="ID_1860793725" CREATED="1383585113006" MODIFIED="1383585121009"/>
+</node>
+<node TEXT="prediction of remaining time" ID="ID_74813526" CREATED="1383585105302" MODIFIED="1383585108897">
+<node TEXT="estimates response transfer delay" ID="ID_399646884" CREATED="1383585122853" MODIFIED="1383585128704"/>
+<node TEXT="estimates app response processing" ID="ID_1263689802" CREATED="1383585156371" MODIFIED="1383585162229"/>
+</node>
+</node>
+<node TEXT="challenges" ID="ID_1383127439" CREATED="1383585166554" MODIFIED="1383585174852">
+<node TEXT="many unpredictable events" ID="ID_1015507056" CREATED="1383585184985" MODIFIED="1383585191996">
+<node TEXT="e.g., time to get GPS coordinates" ID="ID_525479153" CREATED="1383585192304" MODIFIED="1383585201051"/>
+</node>
+<node TEXT="need to track transaction across threads/events" ID="ID_386585746" CREATED="1383585281611" MODIFIED="1383585295413"/>
+<node TEXT="no clock synchronization" ID="ID_1645098477" CREATED="1383585206000" MODIFIED="1383585214098"/>
+</node>
+<node TEXT="how to use" ID="ID_1889950293" CREATED="1383585238581" MODIFIED="1383585240552">
+<node TEXT="on server side, include DLL, use API" ID="ID_1945643024" CREATED="1383585240861" MODIFIED="1383585248480"/>
+<node TEXT="on client side, no changes" ID="ID_1762040486" CREATED="1383585248941" MODIFIED="1383585256459">
+<icon BUILTIN="yes"/>
+<node TEXT="instrumentation adds information automatically to requests" ID="ID_1007933281" CREATED="1383585257356" MODIFIED="1383585268918"/>
+</node>
+</node>
+<node TEXT="solutions" ID="ID_136587967" CREATED="1383585303257" MODIFIED="1383585305748">
+<node TEXT="transaction context" ID="ID_651871054" CREATED="1383585306057" MODIFIED="1383585314212">
+<node TEXT="attached to every transaction" ID="ID_1913744334" CREATED="1383585314736" MODIFIED="1383585326323"/>
+<node TEXT="passed between threads/callbacks/..." ID="ID_1116218702" CREATED="1383585326543" MODIFIED="1383585333914"/>
+<node TEXT="passed from app to server" ID="ID_685597152" CREATED="1383585334639" MODIFIED="1383585338770">
+<node TEXT="using a special HTTP header" ID="ID_1302798484" CREATED="1383585339063" MODIFIED="1383585343650"/>
+</node>
+<node TEXT="API calls inspect TC to estimate delays" ID="ID_1908761234" CREATED="1383585371292" MODIFIED="1383585382975"/>
+</node>
+<node TEXT="TimeSync" ID="ID_389162802" CREATED="1383585385219" MODIFIED="1383585389870">
+<node TEXT="for servers, clock synchronization is easy" ID="ID_960473202" CREATED="1383585390395" MODIFIED="1383585400038"/>
+<node TEXT="mobiles could use the phone&apos;s GPS" ID="ID_576697709" CREATED="1383585400427" MODIFIED="1383585408845">
+<node TEXT="but doesn&apos;t work indoors" ID="ID_8227687" CREATED="1383585409138" MODIFIED="1383585422348">
+<icon BUILTIN="smily_bad"/>
+</node>
+</node>
+<node TEXT="solution: server acts as NTP server" ID="ID_1508556556" CREATED="1383585428897" MODIFIED="1383585437667"/>
+<node TEXT="challenge: mobile network links are not symmetric" ID="ID_687879952" CREATED="1383585445088" MODIFIED="1383585456786">
+<node TEXT="because of phone microsleeps" ID="ID_552571412" CREATED="1383585469285" MODIFIED="1383585476977"/>
+<node TEXT="introduces radio transmitter wake-up delay" ID="ID_1010899169" CREATED="1383585484973" MODIFIED="1383585494816"/>
+<node TEXT="solution: predict when radio is up" ID="ID_1066737047" CREATED="1383585495204" MODIFIED="1383585509847"/>
+<node TEXT="challenge: require radio to be up *and idle*" ID="ID_1128700110" CREATED="1383585510075" MODIFIED="1383585528118"/>
+</node>
+</node>
+<node TEXT="predicting downlink delay" ID="ID_1024331812" CREATED="1383585706318" MODIFIED="1383585711177">
+<node TEXT="analysis of 4000 apps" ID="ID_950111147" CREATED="1383585716966" MODIFIED="1383585723185"/>
+<node TEXT="latency, not throughput, dominates downlink delay" ID="ID_1579569909" CREATED="1383585726989" MODIFIED="1383585740807">
+<node TEXT="only need to predict RTT and #roundtrips" ID="ID_88065950" CREATED="1383585777610" MODIFIED="1383585786988"/>
+</node>
+<node TEXT="TCP window state at server matters" ID="ID_571982250" CREATED="1383585746803" MODIFIED="1383585754862">
+<node TEXT="can response fit in a single window?" ID="ID_315114756" CREATED="1383585763643" MODIFIED="1383585770469"/>
+<node TEXT="problem: middleboxes!" ID="ID_1689329185" CREATED="1383585826990" MODIFIED="1383585835497">
+<node TEXT="need to predict middlebox window size" ID="ID_1122794220" CREATED="1383585836174" MODIFIED="1383585859520"/>
+</node>
+</node>
+<node TEXT="solution" ID="ID_1464789802" CREATED="1383585797488" MODIFIED="1383585798795">
+<node TEXT="decision tree model" ID="ID_220669239" CREATED="1383585876443" MODIFIED="1383585880870"/>
+<node TEXT="predict RTT from TimeSync probes" ID="ID_435514472" CREATED="1383585799087" MODIFIED="1383585805507"/>
+<node TEXT="predict #roundtrips from TCP window states" ID="ID_1353359974" CREATED="1383585805712" MODIFIED="1383585819042"/>
+<node TEXT="use #bytes transferred so far to predict middlebox TCP state" ID="ID_1264801031" CREATED="1383585886506" MODIFIED="1383585904980"/>
+</node>
+</node>
+</node>
+<node TEXT="results" ID="ID_554759371" CREATED="1383585926560" MODIFIED="1383585928227">
+<node TEXT="error for downlink delay" ID="ID_1365503719" CREATED="1383585928615" MODIFIED="1383585953809">
+<node TEXT="12ms median" ID="ID_630992360" CREATED="1383585939599" MODIFIED="1383585947498"/>
+</node>
+<node TEXT="runtime overhead" ID="ID_797328387" CREATED="1383586149704" MODIFIED="1383586152812">
+<node TEXT="0.1% only" ID="ID_454988897" CREATED="1383586153329" MODIFIED="1383586156796"/>
+<node TEXT="negligible server and battery overhead" ID="ID_1089250106" CREATED="1383586157416" MODIFIED="1383586163658"/>
+</node>
+</node>
+<node TEXT="limitations" ID="ID_1148441265" CREATED="1383586172303" MODIFIED="1383586174034">
+<node TEXT="bootstrapping for new apps" ID="ID_1958762176" CREATED="1383586174431" MODIFIED="1383586180338">
+<node TEXT="solution: turn off adaptation until we have enough prediction data" ID="ID_748649647" CREATED="1383586180671" MODIFIED="1383586192298"/>
+</node>
+<node TEXT="complex transactions" ID="ID_636470365" CREATED="1383586195734" MODIFIED="1383586199345"/>
+</node>
 </node>
 </node>
 </node>
