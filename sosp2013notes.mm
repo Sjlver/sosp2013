@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="3"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="4"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -157,6 +157,92 @@
 </node>
 <node TEXT="Questions" ID="ID_125019190" CREATED="1383574871087" MODIFIED="1383574873530">
 <node TEXT="why do python models make thngs easier to test?" ID="ID_331234601" CREATED="1383574874262" MODIFIED="1383574882874"/>
+</node>
+</node>
+<node TEXT="Silo: Speedy Transactions" POSITION="left" ID="ID_1871913035" CREATED="1383575560785" MODIFIED="1383575567963">
+<edge COLOR="#ff00ff"/>
+<node TEXT="goals" ID="ID_1294674645" CREATED="1383575581519" MODIFIED="1383575583019">
+<node TEXT="build high-troughput, in-memory, relational database" ID="ID_903269421" CREATED="1383575583488" MODIFIED="1383575595642"/>
+<node TEXT="fully serializable transactions" ID="ID_1427612576" CREATED="1383575595854" MODIFIED="1383575603553"/>
+<node TEXT="can recover from failures" ID="ID_1421810666" CREATED="1383575604878" MODIFIED="1383575609065"/>
+</node>
+<node TEXT="Intro" ID="ID_913408952" CREATED="1383575786009" MODIFIED="1383575787741">
+<node TEXT="idea" ID="ID_567502880" CREATED="1383575691744" MODIFIED="1383575694083">
+<node TEXT="use a scalable B-tree" ID="ID_1323633424" CREATED="1383575694904" MODIFIED="1383575702922">
+<node TEXT="masstree" ID="ID_175671023" CREATED="1383576427655" MODIFIED="1383576430922"/>
+</node>
+<node TEXT="... build a database on top" ID="ID_1978022766" CREATED="1383575703135" MODIFIED="1383575707146"/>
+</node>
+<node TEXT="results" ID="ID_1299633346" CREATED="1383575709927" MODIFIED="1383575711058">
+<node TEXT="scales well to 16 threads" ID="ID_1726223898" CREATED="1383575711615" MODIFIED="1383575717010"/>
+<node TEXT="but not beyond" ID="ID_1805782655" CREATED="1383575717206" MODIFIED="1383575719642"/>
+<node TEXT="bottleneck: atomic fetch-and-add to generate transaction id" ID="ID_751108156" CREATED="1383575719846" MODIFIED="1383575756399"/>
+<node TEXT="thus, Silo does not need global TIDs" ID="ID_1768366799" CREATED="1383575799448" MODIFIED="1383575812180"/>
+</node>
+</node>
+<node TEXT="secret sauce" ID="ID_1454867822" CREATED="1383575815688" MODIFIED="1383575819643">
+<node TEXT="scalable and serializable transaction commit protocol" ID="ID_1408116425" CREATED="1383575820303" MODIFIED="1383575829450"/>
+<node TEXT="memory contention only occurs when transactiosn coflict" ID="ID_1947801047" CREATED="1383575830631" MODIFIED="1383575839762"/>
+<node TEXT="solution" ID="ID_1547680974" CREATED="1383575888283" MODIFIED="1383575890054">
+<node TEXT="use time-based epochs" ID="ID_1022714510" CREATED="1383575890554" MODIFIED="1383575899462">
+<node TEXT="recovery boundaries" ID="ID_585769970" CREATED="1383575916089" MODIFIED="1383575921036"/>
+<node TEXT="serialization becomes a read (of the epoch number) instead of a write" ID="ID_1392164581" CREATED="1383575935696" MODIFIED="1383575947994"/>
+</node>
+<node TEXT="each txn gets an epoch and sequence number" ID="ID_842024209" CREATED="1383575899850" MODIFIED="1383575908670"/>
+<node TEXT="each record contains TID (epoch+sequence number) of last writer" ID="ID_1292787105" CREATED="1383575957438" MODIFIED="1383575973937"/>
+<node TEXT="TID rule" ID="ID_986293193" CREATED="1383575984405" MODIFIED="1383575987887">
+<node TEXT="teake the smallest number in the current epoch that is larger than any number in the records we read" ID="ID_1478424186" CREATED="1383575988196" MODIFIED="1383576003279"/>
+</node>
+</node>
+<node TEXT="commit protocol" ID="ID_437357365" CREATED="1383576015563" MODIFIED="1383576018326">
+<node TEXT="idea" ID="ID_1738787691" CREATED="1383576065751" MODIFIED="1383576067362">
+<node TEXT="idea: proceed as if records will not be modified" ID="ID_404507702" CREATED="1383576019898" MODIFIED="1383576028925"/>
+<node TEXT="check at commit time whether they were modified" ID="ID_155771002" CREATED="1383576029113" MODIFIED="1383576038580"/>
+<node TEXT="save TIDs in read-set during reads" ID="ID_342608837" CREATED="1383576043465" MODIFIED="1383576055619"/>
+<node TEXT="writes go to local copy" ID="ID_159445057" CREATED="1383576055848" MODIFIED="1383576059187"/>
+</node>
+<node TEXT="phases" ID="ID_1363652661" CREATED="1383576071799" MODIFIED="1383576073554">
+<node TEXT="lock" ID="ID_1440836621" CREATED="1383576075366" MODIFIED="1383576089777">
+<node TEXT="lock (in global order) all records in write set" ID="ID_923592490" CREATED="1383576090102" MODIFIED="1383576098152"/>
+</node>
+<node TEXT="validate" ID="ID_178450" CREATED="1383576101429" MODIFIED="1383576102608">
+<node TEXT="validate records in read set" ID="ID_1146411591" CREATED="1383576104380" MODIFIED="1383576109184"/>
+<node TEXT="abort if record&apos;s TID changed during transsaction" ID="ID_1981971361" CREATED="1383576111460" MODIFIED="1383576121479"/>
+<node TEXT="abort if record is locked by another transaction" ID="ID_1262347077" CREATED="1383576121986" MODIFIED="1383576130526"/>
+</node>
+<node TEXT="commit" ID="ID_91599097" CREATED="1383576132147" MODIFIED="1383576135254">
+<node TEXT="pick a TID and perform writes" ID="ID_1244394824" CREATED="1383576135723" MODIFIED="1383576143405"/>
+</node>
+</node>
+</node>
+<node TEXT="returning results" ID="ID_1447797311" CREATED="1383576196342" MODIFIED="1383576199242">
+<node TEXT="cannot return from a transaction before prior epochs completed" ID="ID_736938145" CREATED="1383576199646" MODIFIED="1383576210201"/>
+</node>
+</node>
+<node TEXT="results" ID="ID_279538796" CREATED="1383576507042" MODIFIED="1383576508477">
+<node TEXT="benchmarks" ID="ID_14183942" CREATED="1383576541280" MODIFIED="1383576545355">
+<node TEXT="TPC-C online retail store benchmark" ID="ID_1585533306" CREATED="1383576545759" MODIFIED="1383576553466"/>
+<node TEXT="YCSB (yahoo key-value store)" ID="ID_273984116" CREATED="1383576572069" MODIFIED="1383576586400"/>
+<node TEXT="on a recent 32-core machine" ID="ID_1396344696" CREATED="1383576557991" MODIFIED="1383576566777"/>
+</node>
+<node TEXT="linear scaling" ID="ID_353309623" CREATED="1383576610723" MODIFIED="1383576619045">
+<node TEXT="works well up to 28 threads" ID="ID_1807582967" CREATED="1383576619827" MODIFIED="1383576625453"/>
+<node TEXT="even up to 32 threads if using tmpfs instead of durable storage" ID="ID_672634883" CREATED="1383576625682" MODIFIED="1383576640012"/>
+</node>
+<node TEXT="several times faster than state of the art" ID="ID_1450230229" CREATED="1383576652392" MODIFIED="1383576658579"/>
+<node TEXT="transactions have little overhead" ID="ID_130237597" CREATED="1383576710565" MODIFIED="1383576717943">
+<node TEXT="only 4% slower than doing key-value updates without transactions" ID="ID_196554118" CREATED="1383576718652" MODIFIED="1383576734102"/>
+</node>
+<node TEXT="secret sauce matters" ID="ID_720650340" CREATED="1383576751874" MODIFIED="1383576756149">
+<node TEXT="other approaches bottleneck on TID generation" ID="ID_1201319968" CREATED="1383576757817" MODIFIED="1383576770012"/>
+<node TEXT="... at about 16 threads on their machine" ID="ID_248624838" CREATED="1383576772032" MODIFIED="1383576778283"/>
+</node>
+</node>
+<node TEXT="fork" ID="ID_1074087316" CREATED="1383576835491" MODIFIED="1383576836623">
+<node TEXT="https://github.com/stephentu/silo" ID="ID_954892778" CREATED="1383576837012" MODIFIED="1383576849102"/>
+</node>
+<node TEXT="Questions" ID="ID_897582945" CREATED="1383576978603" MODIFIED="1383576994293">
+<node TEXT="epochs trade throughput for latency" ID="ID_172759385" CREATED="1383576980466" MODIFIED="1383576991989"/>
 </node>
 </node>
 </node>
