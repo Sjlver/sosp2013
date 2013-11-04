@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="9"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="11"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -691,6 +691,209 @@
 <node TEXT="DynamoRio" ID="ID_602299107" CREATED="1383592267216" MODIFIED="1383592269659"/>
 </node>
 <node TEXT="github.com/piyus/btkernel" ID="ID_273326655" CREATED="1383593407074" MODIFIED="1383593418197"/>
+</node>
+<node TEXT="VirtuOS" POSITION="left" ID="ID_1586033311" CREATED="1383593488021" MODIFIED="1383593490240">
+<edge COLOR="#7c007c"/>
+<node TEXT="motivation" ID="ID_934495327" CREATED="1383593506347" MODIFIED="1383593518742">
+<node TEXT="today&apos;s OSs are monolithic kernels" ID="ID_452667714" CREATED="1383593521290" MODIFIED="1383593533653"/>
+<node TEXT="thus, bad fault isolation" ID="ID_1019374982" CREATED="1383593537457" MODIFIED="1383593551668"/>
+<node TEXT="error-prone device drivers exacerbate the problem" ID="ID_1061087887" CREATED="1383593576151" MODIFIED="1383593586641"/>
+</node>
+<node TEXT="prior work" ID="ID_1261608951" CREATED="1383593601781" MODIFIED="1383593603928">
+<node TEXT="split monolithic kernel into isolated modules" ID="ID_739032900" CREATED="1383593605373" MODIFIED="1383593619975">
+<node TEXT="microkernels" ID="ID_496151576" CREATED="1383593628779" MODIFIED="1383593631926"/>
+<node TEXT="user-level drivers" ID="ID_634478463" CREATED="1383593635362" MODIFIED="1383593642653"/>
+<node TEXT="Xen driver domains" ID="ID_570239246" CREATED="1383593647226" MODIFIED="1383593654236"/>
+</node>
+<node TEXT="VirtuOS is a new point in the microkernel-VM design space" ID="ID_486990272" CREATED="1383593664744" MODIFIED="1383593679555"/>
+</node>
+<node TEXT="goals" ID="ID_742922883" CREATED="1383593692087" MODIFIED="1383593693730">
+<node TEXT="flexibility" ID="ID_847219182" CREATED="1383593694095" MODIFIED="1383593696130">
+<node TEXT="want to protect many different types of modules" ID="ID_1700699829" CREATED="1383593697007" MODIFIED="1383593733943">
+<node TEXT="e.g., drivers" ID="ID_1736435805" CREATED="1383593734348" MODIFIED="1383593736487"/>
+<node TEXT="e.g., network stack" ID="ID_874659524" CREATED="1383593736700" MODIFIED="1383593740999"/>
+<node TEXT="e.g., file systems" ID="ID_1173337031" CREATED="1383593744067" MODIFIED="1383593746782"/>
+</node>
+<node TEXT="VirtuOS protects both low-level and high-level components" ID="ID_1650845881" CREATED="1383593754562" MODIFIED="1383593764389"/>
+</node>
+<node TEXT="strong isolation" ID="ID_515720083" CREATED="1383593765850" MODIFIED="1383593769421">
+<node TEXT="protection domains" ID="ID_432071911" CREATED="1383593772521" MODIFIED="1383593777580">
+<node TEXT="e.g., separate memory address spaces" ID="ID_943152740" CREATED="1383593777880" MODIFIED="1383593784100"/>
+</node>
+<node TEXT="privilege separation" ID="ID_804848710" CREATED="1383593785800" MODIFIED="1383593788963">
+<node TEXT="e.g., drivers run in less privileged mode" ID="ID_875190918" CREATED="1383593789328" MODIFIED="1383593797915"/>
+</node>
+<node TEXT="device protection" ID="ID_207445673" CREATED="1383593800759" MODIFIED="1383593803490">
+<node TEXT="can protect against faulty devices" ID="ID_272433304" CREATED="1383593806159" MODIFIED="1383593814401"/>
+<node TEXT="e.g., iMMU remaps DMA regions" ID="ID_1486521801" CREATED="1383593814614" MODIFIED="1383593824913"/>
+</node>
+<node TEXT="VirtuOS supports all of these" ID="ID_1803150400" CREATED="1383593827398" MODIFIED="1383593833464"/>
+</node>
+<node TEXT="performance" ID="ID_815915895" CREATED="1383593836500" MODIFIED="1383593838856">
+<node TEXT="performance issues hindered Microkernel adoption" ID="ID_1284642550" CREATED="1383593840260" MODIFIED="1383593848535"/>
+<node TEXT="VirtuOS performance comparable to monolithic systems" ID="ID_1022450320" CREATED="1383593857355" MODIFIED="1383593868174"/>
+</node>
+<node TEXT="compatibility" ID="ID_669381537" CREATED="1383593873874" MODIFIED="1383593876710">
+<node TEXT="want application-level compatibility" ID="ID_1961935294" CREATED="1383593882722" MODIFIED="1383593890604"/>
+<node TEXT="want system code compatibility" ID="ID_330797797" CREATED="1383593894937" MODIFIED="1383593902156">
+<node TEXT="e.g., reuse existing driver unmodified" ID="ID_1870823550" CREATED="1383593902456" MODIFIED="1383593911155"/>
+</node>
+</node>
+</node>
+<node TEXT="architecture" ID="ID_1919743377" CREATED="1383593921303" MODIFIED="1383593924106">
+<node TEXT="VirtuOS runs on top of hypervisor" ID="ID_454472673" CREATED="1383593924478" MODIFIED="1383593934329"/>
+<node TEXT="multiple domains, each in its own VM" ID="ID_523797080" CREATED="1383593934550" MODIFIED="1383593946897">
+<node TEXT="e.g., network domain" ID="ID_542938729" CREATED="1383593949013" MODIFIED="1383593953080"/>
+<node TEXT="e.g., storage domain" ID="ID_518652311" CREATED="1383593953285" MODIFIED="1383593956312"/>
+<node TEXT="e.g., primary domain with process management, PCI, ..." ID="ID_1538953904" CREATED="1383593959405" MODIFIED="1383593969111"/>
+</node>
+<node TEXT="individual VMs get protected direct device access" ID="ID_170514967" CREATED="1383593981730" MODIFIED="1383593990438"/>
+<node TEXT="system calls get directly dispatched to the right VM" ID="ID_811496895" CREATED="1383593994161" MODIFIED="1383594001733"/>
+</node>
+<node TEXT="example: read system call" ID="ID_1300376510" CREATED="1383594103970" MODIFIED="1383594108334">
+<node TEXT="file descriptors are tagged with their service domain" ID="ID_1893702309" CREATED="1383594109122" MODIFIED="1383594118413"/>
+<node TEXT="hence, read() call knows what domain to dispatch the syscall to" ID="ID_1068760444" CREATED="1383594118706" MODIFIED="1383594132380"/>
+<node TEXT="syscalls are put in a shared request queue" ID="ID_451702361" CREATED="1383594136953" MODIFIED="1383594161226"/>
+<node TEXT="storage service domain wakes up, sees request, serves it" ID="ID_867195080" CREATED="1383594161687" MODIFIED="1383594174177"/>
+<node TEXT="read() result is copied into data buffer in shared region" ID="ID_1476573644" CREATED="1383594175038" MODIFIED="1383594190408"/>
+<node TEXT="service domain puts a &quot;completed&quot; notification in queue, to notify user thread that the syscall has completed" ID="ID_893724427" CREATED="1383594234418" MODIFIED="1383594262747">
+<node TEXT="for fast syscalls, user thread can spin until syscall finishes" ID="ID_1184266553" CREATED="1383594391759" MODIFIED="1383594406577"/>
+</node>
+</node>
+<node TEXT="disadvantages" ID="ID_399015078" CREATED="1383594307597" MODIFIED="1383594316176">
+<node TEXT="data buffer introduces additional copy" ID="ID_1076793935" CREATED="1383594317020" MODIFIED="1383594323359"/>
+</node>
+<node TEXT="people.cs.vt.edu/&lt;tilde&gt;rnikola" ID="ID_1777870400" CREATED="1383594955745" MODIFIED="1383595019680"/>
+</node>
+<node TEXT="20 years of L4" POSITION="left" ID="ID_1920142851" CREATED="1383595288353" MODIFIED="1383595297725">
+<edge COLOR="#007c7c"/>
+<node TEXT="intro" ID="ID_1543035805" CREATED="1383595298569" MODIFIED="1383595300652">
+<node TEXT="20 years ago..." ID="ID_1116870990" CREATED="1383595301009" MODIFIED="1383595305356">
+<node TEXT="Windows NT" ID="ID_344857656" CREATED="1383595306152" MODIFIED="1383595316363"/>
+<node TEXT="improving IPC by Kernel design (SOSP 1993)" ID="ID_853205242" CREATED="1383595316880" MODIFIED="1383595327698">
+<node TEXT="100 microseconds disaster" ID="ID_329018423" CREATED="1383595348565" MODIFIED="1383595354377"/>
+<node TEXT="IPCs could not get below 100 us" ID="ID_1466750564" CREATED="1383595354934" MODIFIED="1383595371880"/>
+<node TEXT="until L4 did it in 5 us" ID="ID_1764294363" CREATED="1383595379580" MODIFIED="1383595399348">
+<node TEXT="in 1995, people found that the cache footprint was the main reason for slowness" ID="ID_511228649" CREATED="1383595414306" MODIFIED="1383595433923"/>
+</node>
+</node>
+</node>
+</node>
+<node ID="ID_386782743" CREATED="1383595512507" MODIFIED="1383595524642"><richcontent TYPE="NODE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      core principle<font color="#0000ff">s</font>
+    </p>
+  </body>
+</html>
+
+</richcontent>
+<node TEXT="minimality" ID="ID_1739325071" CREATED="1383595525921" MODIFIED="1383595527901">
+<node TEXT="what?" ID="ID_1189495511" CREATED="1383596779989" MODIFIED="1383596781832">
+<node TEXT="keep in the kernel only what you must" ID="ID_191642423" CREATED="1383595530594" MODIFIED="1383595537340"/>
+<node TEXT="L4 kernels are small (approx 10KLoc)" ID="ID_1066078557" CREATED="1383595587813" MODIFIED="1383595601256"/>
+<node TEXT="kernels have not grown much over 20 years" ID="ID_1604132797" CREATED="1383595636409" MODIFIED="1383595645557"/>
+<node TEXT="APIs even shrunk, became simpler" ID="ID_1232610327" CREATED="1383595645770" MODIFIED="1383595653108"/>
+</node>
+<node TEXT="*the* primary design principle" ID="ID_1696635454" CREATED="1383596787379" MODIFIED="1383596804486"/>
+</node>
+<node TEXT="dependability" ID="ID_1844389733" CREATED="1383595761746" MODIFIED="1383595763885">
+<node TEXT="several refinement steps with proofs" ID="ID_1595708661" CREATED="1383595764682" MODIFIED="1383595778004"/>
+<node TEXT="thus, verified down to the binary" ID="ID_877246010" CREATED="1383595778393" MODIFIED="1383595784740"/>
+</node>
+<node TEXT="fast IPC" ID="ID_450512437" CREATED="1383596808555" MODIFIED="1383596813622">
+<node TEXT="still matters today" ID="ID_1169931898" CREATED="1383596820874" MODIFIED="1383596843411"/>
+<node TEXT="but shouldn&apos;t optimize prematurely" ID="ID_301715899" CREATED="1383596843993" MODIFIED="1383596849835"/>
+</node>
+</node>
+<node TEXT="L4 family tree" ID="ID_977745662" CREATED="1383595660976" MODIFIED="1383595664604">
+<node TEXT="many implementations of L4 exist" ID="ID_1125499863" CREATED="1383595665064" MODIFIED="1383595669994"/>
+<node TEXT="deployment" ID="ID_1202173152" CREATED="1383595700390" MODIFIED="1383595703489">
+<node TEXT="ebook readers" ID="ID_1339150662" CREATED="1383595703829" MODIFIED="1383595710208"/>
+<node TEXT="firmware for mobile phone chips" ID="ID_300602018" CREATED="1383595710597" MODIFIED="1383595716696"/>
+<node TEXT="used in corean trades" ID="ID_267829643" CREATED="1383595717556" MODIFIED="1383595721496"/>
+<node TEXT="PIkeOS used in Airbus 350" ID="ID_880305643" CREATED="1383595721717" MODIFIED="1383595726599"/>
+<node TEXT="SiMKo 3 &quot;Merkelphone&quot;" ID="ID_682489049" CREATED="1383595732100" MODIFIED="1383595739807"/>
+</node>
+</node>
+<node TEXT="L4 implementation" ID="ID_840600080" CREATED="1383595840996" MODIFIED="1383595846967">
+<node TEXT="overall goal" ID="ID_602415832" CREATED="1383595852788" MODIFIED="1383595854839">
+<node TEXT="minimize cache/TLB footprint" ID="ID_1865540157" CREATED="1383595855107" MODIFIED="1383595867342"/>
+</node>
+<node TEXT="IPC" ID="ID_1819864459" CREATED="1383596278143" MODIFIED="1383596279826">
+<node TEXT="rendezvous model" ID="ID_1868240693" CREATED="1383595870699" MODIFIED="1383595875213">
+<node TEXT="synchronous IPC model" ID="ID_412606232" CREATED="1383596228106" MODIFIED="1383596232893"/>
+<node TEXT="IPC happens when both threads are ready" ID="ID_1259175285" CREATED="1383595887041" MODIFIED="1383595898372"/>
+<node TEXT="thus, kernel needs a single copy of data from sender directly to receiver" ID="ID_1277967987" CREATED="1383595898633" MODIFIED="1383595911043"/>
+<node TEXT="copy happens in the sender&apos;s context" ID="ID_673589793" CREATED="1383595931790" MODIFIED="1383595938025"/>
+<node TEXT="registers don&apos;t need to be copied at all" ID="ID_369648739" CREATED="1383595911912" MODIFIED="1383595927378"/>
+</node>
+<node TEXT="&quot;Long IPC&quot;" ID="ID_1916672414" CREATED="1383596089507" MODIFIED="1383596094190">
+<node TEXT="a feature of early L4 kernels" ID="ID_273422497" CREATED="1383596094587" MODIFIED="1383596103886"/>
+<node TEXT="allowed to copy data from anywhere in the sender to anywhere in the receiver" ID="ID_964032620" CREATED="1383596104618" MODIFIED="1383596114573"/>
+<node TEXT="both sender and receiver must handle page faults during copy" ID="ID_305131190" CREATED="1383596114817" MODIFIED="1383596126980">
+<node TEXT="but page-fault handlers are in userspace" ID="ID_337572473" CREATED="1383596127281" MODIFIED="1383596133812"/>
+<node TEXT="untrusted" ID="ID_1406893340" CREATED="1383596134008" MODIFIED="1383596136100"/>
+<node TEXT="can lead to DOS" ID="ID_1692880866" CREATED="1383596136465" MODIFIED="1383596139659"/>
+</node>
+<node TEXT="new L4 kernels do not provide long IPC" ID="ID_1082909317" CREATED="1383596142967" MODIFIED="1383596151843"/>
+</node>
+<node TEXT="timeouts" ID="ID_1830356022" CREATED="1383596154351" MODIFIED="1383596156482">
+<node TEXT="no good theory for determining timeouts" ID="ID_1537633008" CREATED="1383596157014" MODIFIED="1383596168361"/>
+<node TEXT="thus, L4 does not provide timeouts for IPC" ID="ID_1536720664" CREATED="1383596201780" MODIFIED="1383596218462"/>
+</node>
+<node TEXT="issues with synchronous IPC" ID="ID_1784250278" CREATED="1383596284982" MODIFIED="1383596292065">
+<node TEXT="threads will always block when doing IPC" ID="ID_1341315573" CREATED="1383596293150" MODIFIED="1383596303664"/>
+<node TEXT="this often requires separate threads for IPC" ID="ID_413625367" CREATED="1383596314940" MODIFIED="1383596527651">
+<icon BUILTIN="smily_bad"/>
+</node>
+<node TEXT="newer L4 kernels have asynchronous IPC" ID="ID_694806643" CREATED="1383596349850" MODIFIED="1383596361516"/>
+</node>
+<node TEXT="IPC destination naming" ID="ID_173294313" CREATED="1383596369472" MODIFIED="1383596375628">
+<node TEXT="original L4 used thread IDs for IPC" ID="ID_1632390468" CREATED="1383596376848" MODIFIED="1383596383387"/>
+<node TEXT="thus, internal thread structure of server is exposed to client" ID="ID_1976256283" CREATED="1383596390271" MODIFIED="1383596399602"/>
+<node TEXT="cannot do load-balancing at the server easily" ID="ID_1292921282" CREATED="1383596400854" MODIFIED="1383596413585"/>
+<node TEXT="has covert channels" ID="ID_629468265" CREATED="1383596419501" MODIFIED="1383596423216"/>
+<node TEXT="newer L4 kernels use end-points" ID="ID_139671539" CREATED="1383596429885" MODIFIED="1383596453126">
+<node TEXT="so-called &quot;ports&quot;" ID="ID_779385397" CREATED="1383596453371" MODIFIED="1383596456462"/>
+<node TEXT="synchronous queues that synchronize senders with receivers" ID="ID_1299847288" CREATED="1383596464673" MODIFIED="1383596501275"/>
+<node TEXT="queues do not buffer messages (instead, sender blocks)" ID="ID_23248002" CREATED="1383596482113" MODIFIED="1383596493771"/>
+</node>
+</node>
+</node>
+<node TEXT="virtual TCB Array" ID="ID_1585208396" CREATED="1383596538509" MODIFIED="1383596549736">
+<node TEXT="TCB = thread control block" ID="ID_1719932495" CREATED="1383596558260" MODIFIED="1383596565647"/>
+<node TEXT="indexed by thread id" ID="ID_172289070" CREATED="1383596550620" MODIFIED="1383596556855"/>
+<node TEXT="Kernel stack allocated alongside the TCB" ID="ID_1191555185" CREATED="1383596587058" MODIFIED="1383596600300">
+<node TEXT="can find TCB address by masking bits in some stack pointer" ID="ID_679974486" CREATED="1383596611775" MODIFIED="1383596631010"/>
+</node>
+<node TEXT="downside" ID="ID_1859275473" CREATED="1383596567123" MODIFIED="1383596572462">
+<node TEXT="consumes virtual address space" ID="ID_1167694635" CREATED="1383596572771" MODIFIED="1383596579445"/>
+</node>
+<node TEXT="no more used in today&apos;s L4" ID="ID_720804995" CREATED="1383596654053" MODIFIED="1383596661424">
+<node TEXT="not worthwile on modern processors" ID="ID_830934147" CREATED="1383596662067" MODIFIED="1383596667320"/>
+</node>
+</node>
+</node>
+<node TEXT="L4 Tricks and Design Decisions" ID="ID_984921404" CREATED="1383596725081" MODIFIED="1383596736027">
+<node TEXT="published at SOSP 93 and 95" ID="ID_1758175855" CREATED="1383596744311" MODIFIED="1383596750930"/>
+<node TEXT="most of them no longer valid today" ID="ID_837486177" CREATED="1383596736448" MODIFIED="1383596741515"/>
+<node TEXT="what is still valid?" ID="ID_106385216" CREATED="1383596753350" MODIFIED="1383596756625">
+<node TEXT="non-preemptible kernel" ID="ID_1628858057" CREATED="1383596757046" MODIFIED="1383596762145"/>
+<node TEXT="user-mode device drivers" ID="ID_1195395240" CREATED="1383596762485" MODIFIED="1383596768713"/>
+<node TEXT="capabilities are the way to go" ID="ID_185355022" CREATED="1383596868503" MODIFIED="1383596872626"/>
+</node>
+</node>
+<node TEXT="Open problems" ID="ID_1749804575" CREATED="1383596873646" MODIFIED="1383596875697">
+<node TEXT="how to reason about time?" ID="ID_1881895969" CREATED="1383596876614" MODIFIED="1383596881017">
+<node TEXT="a good abstraction is still elusive" ID="ID_38082014" CREATED="1383596881301" MODIFIED="1383596886961"/>
+</node>
+</node>
 </node>
 </node>
 </map>
