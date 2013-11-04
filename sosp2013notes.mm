@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="4"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="5"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -243,6 +243,71 @@
 </node>
 <node TEXT="Questions" ID="ID_897582945" CREATED="1383576978603" MODIFIED="1383576994293">
 <node TEXT="epochs trade throughput for latency" ID="ID_172759385" CREATED="1383576980466" MODIFIED="1383576991989"/>
+</node>
+</node>
+<node TEXT="Everything you wanted to know about synchronization" POSITION="left" ID="ID_1947615017" CREATED="1383577250040" MODIFIED="1383577262491">
+<edge COLOR="#00ffff"/>
+<node TEXT="intro" ID="ID_1409449412" CREATED="1383577270231" MODIFIED="1383577271394">
+<node TEXT="multicore is important" ID="ID_155738566" CREATED="1383577271935" MODIFIED="1383577275266"/>
+<node TEXT="synchronization is a scalability bottleneck" ID="ID_624476846" CREATED="1383577297557" MODIFIED="1383577305400"/>
+<node TEXT="does not refer to previous talks" ID="ID_708210160" CREATED="1383577347754" MODIFIED="1383577364885">
+<icon BUILTIN="smily_bad"/>
+</node>
+<node TEXT="paper answers the question: what is the main source of scalability problems?" ID="ID_198319374" CREATED="1383577429964" MODIFIED="1383577455382"/>
+<node TEXT="answer: scalability is a hardware problem" ID="ID_1825492899" CREATED="1383577455635" MODIFIED="1383577463230"/>
+</node>
+<node TEXT="experiments" ID="ID_436812819" CREATED="1383577590458" MODIFIED="1383577592917">
+<node TEXT="hardware platforms" ID="ID_1205543152" CREATED="1383577595713" MODIFIED="1383577604708">
+<node TEXT="AMD opteron 8-socket 48 core" ID="ID_234681924" CREATED="1383577605033" MODIFIED="1383577617355"/>
+<node TEXT="Intel Xeon 8-socket 80 cores" ID="ID_75604148" CREATED="1383577618896" MODIFIED="1383577627843"/>
+<node TEXT="Sun Niagara 2 (8 cores)" ID="ID_251277727" CREATED="1383577628047" MODIFIED="1383577636322"/>
+<node TEXT="Tilera 36 cores" ID="ID_1417294104" CREATED="1383577636510" MODIFIED="1383577642178"/>
+</node>
+<node TEXT="synchronization layers" ID="ID_1038769361" CREATED="1383577644350" MODIFIED="1383577653593">
+<node TEXT="software" ID="ID_1941572990" CREATED="1383577656581" MODIFIED="1383577658609">
+<node TEXT="apps (e.g., hash table)" ID="ID_1719671621" CREATED="1383577662957" MODIFIED="1383577668792"/>
+<node TEXT="lock algorithms" ID="ID_207800177" CREATED="1383577669029" MODIFIED="1383577671744"/>
+</node>
+<node TEXT="hardware" ID="ID_1509444925" CREATED="1383577658773" MODIFIED="1383577660609">
+<node TEXT="atomic ops" ID="ID_1234107280" CREATED="1383577672980" MODIFIED="1383577675583"/>
+<node TEXT="cache coherence protocols" ID="ID_231629736" CREATED="1383577675804" MODIFIED="1383577680687"/>
+</node>
+</node>
+</node>
+<node TEXT="key observations" ID="ID_1888183674" CREATED="1383577465002" MODIFIED="1383577468325">
+<node TEXT="crossing sockets is expensive" ID="ID_1384024026" CREATED="1383577468914" MODIFIED="1383577475541">
+<node TEXT="transfering a cache line across sockets is 8x more expensive than accessing it locally" ID="ID_848852580" CREATED="1383577475898" MODIFIED="1383577757738"/>
+<node TEXT="Opteron" ID="ID_1539218890" CREATED="1383577722833" MODIFIED="1383577726549">
+<node TEXT="within socket: 40ns" ID="ID_591667036" CREATED="1383577707770" MODIFIED="1383577711613"/>
+<node TEXT="per hop: +40ns" ID="ID_1157744843" CREATED="1383577711825" MODIFIED="1383577720429"/>
+</node>
+<node TEXT="Xeon" ID="ID_1189558641" CREATED="1383577729833" MODIFIED="1383577731972">
+<node TEXT="within socket: 20-40 ns" ID="ID_1321630561" CREATED="1383577732920" MODIFIED="1383577741475"/>
+<node TEXT="per hop: +50 ns" ID="ID_506840469" CREATED="1383577741888" MODIFIED="1383577747755"/>
+</node>
+<node TEXT="Lock and Hashtable experiments" ID="ID_821675519" CREATED="1383577928771" MODIFIED="1383577935758">
+<node TEXT="show negative scalability on Xeon" ID="ID_1252172188" CREATED="1383577936251" MODIFIED="1383577943366"/>
+<node TEXT="show no or little scalability (beyond socket) on Opteron" ID="ID_1796828031" CREATED="1383577943570" MODIFIED="1383577955885"/>
+</node>
+</node>
+<node TEXT="sharing within sockets is necessary, but not sufficient" ID="ID_188055782" CREATED="1383577494656" MODIFIED="1383577504067">
+<node TEXT="broadcasts to all sockets can happen even if the data is local" ID="ID_862972993" CREATED="1383578019318" MODIFIED="1383578032656"/>
+<node TEXT="... because the coherency protocol might not be sure that the data is local" ID="ID_306282831" CREATED="1383578032876" MODIFIED="1383578047631"/>
+</node>
+<node TEXT="intra-socket uniformity matters" ID="ID_1676380648" CREATED="1383577505736" MODIFIED="1383577514402">
+<node TEXT="uniform cores (e.g., niagara) scale up to 70% better than non-uniform ones (e.g., tilera)" ID="ID_1426877804" CREATED="1383578475103" MODIFIED="1383578492177"/>
+</node>
+<node TEXT="loads/stores can be as expensive as atomic operations" ID="ID_1708948307" CREATED="1383577514671" MODIFIED="1383577525929">
+<node TEXT="if data is local" ID="ID_95831762" CREATED="1383578329281" MODIFIED="1383578332372">
+<node TEXT="CAS is 10x more expensive than load/store" ID="ID_1526322528" CREATED="1383578332679" MODIFIED="1383578339899"/>
+</node>
+<node TEXT="if data is remote" ID="ID_1422040161" CREATED="1383578341320" MODIFIED="1383578345779">
+<node TEXT="CAS only 35% more expensive than load/store" ID="ID_524615033" CREATED="1383578346479" MODIFIED="1383578359602"/>
+</node>
+</node>
+<node TEXT="simple locks are often fastest" ID="ID_605040988" CREATED="1383577545069" MODIFIED="1383577552960">
+<node TEXT="spinlock perform best in 25/32 experiments" ID="ID_1878702803" CREATED="1383578431098" MODIFIED="1383578440533"/>
+</node>
 </node>
 </node>
 </node>
