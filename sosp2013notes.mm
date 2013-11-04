@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="8"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="9"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -611,6 +611,86 @@
 <node TEXT="complex transactions" ID="ID_636470365" CREATED="1383586195734" MODIFIED="1383586199345"/>
 </node>
 </node>
+</node>
+<node TEXT="Dynamic Binary Translation" POSITION="left" ID="ID_1129396542" CREATED="1383591788785" MODIFIED="1383591804532">
+<edge COLOR="#007c00"/>
+<node TEXT="intro" ID="ID_170538328" CREATED="1383591807168" MODIFIED="1383591809587">
+<node TEXT="what is DBT?" ID="ID_1366573267" CREATED="1383591852221" MODIFIED="1383591858496">
+<node TEXT="dispatcher translates one BB at a time" ID="ID_1906356668" CREATED="1383591809896" MODIFIED="1383591821034"/>
+<node TEXT="jump at end of BB goes back to dispatcher" ID="ID_1793193854" CREATED="1383591821247" MODIFIED="1383591831314"/>
+<node TEXT="code cache keeps translated blocks" ID="ID_1154682252" CREATED="1383591831518" MODIFIED="1383591838889"/>
+</node>
+<node TEXT="why is kernel-level DBT harder?" ID="ID_989068225" CREATED="1383591865348" MODIFIED="1383591872799">
+<node TEXT="exceptions and interrups" ID="ID_931231480" CREATED="1383591873195" MODIFIED="1383591878470">
+<node TEXT="there are lots of them..." ID="ID_1015336523" CREATED="1383591878843" MODIFIED="1383591885374"/>
+</node>
+</node>
+</node>
+<node TEXT="how does kernel-level DBT work?" ID="ID_150789544" CREATED="1383591927848" MODIFIED="1383591934667">
+<node TEXT="interpose on all kernel entry points" ID="ID_201852163" CREATED="1383591935144" MODIFIED="1383591942554">
+<node TEXT="e.g., control the interrupt descriptor table" ID="ID_1357954702" CREATED="1383591947566" MODIFIED="1383591960041"/>
+</node>
+<node TEXT="what happens at an interrupt?" ID="ID_1944022437" CREATED="1383591983988" MODIFIED="1383591992255">
+<node TEXT="1) convert interrupt state on stack to native values" ID="ID_713993637" CREATED="1383591993587" MODIFIED="1383592004582"/>
+<node TEXT="2) emulate precise exceptions" ID="ID_1025856078" CREATED="1383592007554" MODIFIED="1383592013597">
+<node TEXT="roll back partially executed translated instructions" ID="ID_363763530" CREATED="1383592034040" MODIFIED="1383592047099"/>
+<node TEXT="overhead: translation needs to be structured to be able to roll back." ID="ID_37507932" CREATED="1383592074477" MODIFIED="1383592099303"/>
+</node>
+<node TEXT="3) emulate precise interrupt" ID="ID_226008726" CREATED="1383592110603" MODIFIED="1383592118678">
+<node TEXT="delay delivery until the next instruction starts" ID="ID_1884640513" CREATED="1383592119467" MODIFIED="1383592127285"/>
+</node>
+</node>
+</node>
+<node TEXT="BTKernel" ID="ID_991983312" CREATED="1383592292622" MODIFIED="1383592295513">
+<node TEXT="loadable kernel-module for linux" ID="ID_1681710794" CREATED="1383592297838" MODIFIED="1383592304265"/>
+<node TEXT="insight" ID="ID_713221415" CREATED="1383592304709" MODIFIED="1383592309825">
+<node TEXT="fully transparent DBT is not required" ID="ID_1535671383" CREATED="1383592310246" MODIFIED="1383592319632">
+<node TEXT="kernel rarely relies on precise interrupts" ID="ID_1550635093" CREATED="1383592319941" MODIFIED="1383592328511"/>
+<node TEXT="kernel rarely examines return addresses" ID="ID_767844317" CREATED="1383592328780" MODIFIED="1383592338335"/>
+<node TEXT="thus, special cases can be handled specially" ID="ID_529747013" CREATED="1383592346907" MODIFIED="1383592357142"/>
+</node>
+<node TEXT="interrupts bypass the dispatcher, jump directly to translated code" ID="ID_301826049" CREATED="1383592370138" MODIFIED="1383592381492"/>
+</node>
+<node TEXT="concerns" ID="ID_73512828" CREATED="1383592410423" MODIFIED="1383592413170">
+<node TEXT="at interrupts, read/write of the program counter yields wrong values" ID="ID_1731501074" CREATED="1383592413477" MODIFIED="1383592598189">
+<node TEXT="example: linux exception tables in page fault handler" ID="ID_327415904" CREATED="1383592436805" MODIFIED="1383592445375"/>
+<node TEXT="exception table constructed at compile time" ID="ID_650986769" CREATED="1383592452092" MODIFIED="1383592458975">
+<node TEXT="contains PC ranges that are allowed to page fault" ID="ID_129240442" CREATED="1383592459203" MODIFIED="1383592470206"/>
+<node TEXT="at exception, if PC not in table, the kernel panics" ID="ID_1609609514" CREATED="1383592476266" MODIFIED="1383592499716"/>
+</node>
+<node TEXT="solution: add addresses from code cache to exception table" ID="ID_89331216" CREATED="1383592502296" MODIFIED="1383592517258"/>
+</node>
+<node TEXT="code-cache addresses live in kernel data structures" ID="ID_201805728" CREATED="1383592631935" MODIFIED="1383592643266">
+<node TEXT="what happens if the cache is invalidated?" ID="ID_748274674" CREATED="1383592644495" MODIFIED="1383592650898"/>
+<node TEXT="solution: immutable and immovable cache blocks" ID="ID_1136363055" CREATED="1383592722601" MODIFIED="1383592733988"/>
+</node>
+<node TEXT="imprecise interrupts/exception" ID="ID_854518773" CREATED="1383592783733" MODIFIED="1383592792199">
+<node TEXT="solution: do nothing" ID="ID_1376614706" CREATED="1383592794020" MODIFIED="1383592799759"/>
+<node TEXT="the authors didn&apos;t find any example where the kernel relies on this." ID="ID_1048825939" CREATED="1383592800220" MODIFIED="1383592812838"/>
+</node>
+</node>
+<node TEXT="optimizations" ID="ID_1954497730" CREATED="1383592818643" MODIFIED="1383592821870">
+<node TEXT="L1-cache aware code cache" ID="ID_1809966939" CREATED="1383592823890" MODIFIED="1383592829629">
+<node TEXT="DBT engines do direct branch chaining" ID="ID_138263245" CREATED="1383592862248" MODIFIED="1383592870786"/>
+<node TEXT="thus, edge code (brach to dispatcher) is executed only once" ID="ID_584935714" CREATED="1383592871271" MODIFIED="1383592891049"/>
+<node TEXT="solution: allocate edge code in a special memory region" ID="ID_1488095871" CREATED="1383592903333" MODIFIED="1383592916655"/>
+</node>
+<node TEXT="handle function returns" ID="ID_1863115504" CREATED="1383592930219" MODIFIED="1383592940910">
+<node TEXT="traditionally, &quot;return&quot; handled as indirect branch" ID="ID_118976995" CREATED="1383592941257" MODIFIED="1383592951701"/>
+<node TEXT="instead, want to translate &quot;return&quot; to &quot;return&quot;" ID="ID_359932975" CREATED="1383592952065" MODIFIED="1383592971667"/>
+<node TEXT="needs carefull handling of &quot;call&quot; instructions in indirect targets" ID="ID_561940146" CREATED="1383592977943" MODIFIED="1383592989538"/>
+</node>
+</node>
+</node>
+<node TEXT="results" ID="ID_113474645" CREATED="1383593128485" MODIFIED="1383593129849">
+<node TEXT="almost native performance in many cases" ID="ID_1807029741" CREATED="1383593132197" MODIFIED="1383593140064"/>
+<node TEXT="call/ret optimization drastically (10000x) reduces the number of dispatcher exits" ID="ID_668338366" CREATED="1383593140357" MODIFIED="1383593166150"/>
+</node>
+<node TEXT="prior work" ID="ID_922508333" CREATED="1383592254417" MODIFIED="1383592256717">
+<node TEXT="VMware study (ASPLOS 2006)" ID="ID_354248494" CREATED="1383592257345" MODIFIED="1383592266908"/>
+<node TEXT="DynamoRio" ID="ID_602299107" CREATED="1383592267216" MODIFIED="1383592269659"/>
+</node>
+<node TEXT="github.com/piyus/btkernel" ID="ID_273326655" CREATED="1383593407074" MODIFIED="1383593418197"/>
 </node>
 </node>
 </map>
