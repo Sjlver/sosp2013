@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="1"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="2"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -1019,6 +1019,102 @@
 </node>
 </node>
 <node TEXT="github.com/vijay03/optfs" ID="ID_9658348" CREATED="1383661453578" MODIFIED="1383661465661"/>
+</node>
+<node TEXT="Do not blame users for misconfigurations" POSITION="left" ID="ID_1887254330" CREATED="1383661833064" MODIFIED="1383661838091">
+<edge COLOR="#0000ff"/>
+<node TEXT="intro" ID="ID_1078692416" CREATED="1383661838464" MODIFIED="1383661844692">
+<node TEXT="we all make configuration errors" ID="ID_1841292946" CREATED="1383661845056" MODIFIED="1383661851715">
+<node TEXT="30% of software issues" ID="ID_720179602" CREATED="1383661852302" MODIFIED="1383661869962"/>
+</node>
+<node TEXT="misconfigurations are bad" ID="ID_577394483" CREATED="1383661993830" MODIFIED="1383661997513">
+<node TEXT="20% of tested software can be made unavailable by misconfiguration" ID="ID_1503211789" CREATED="1383661997733" MODIFIED="1383662012904"/>
+</node>
+<node TEXT="often, this is because config is hard" ID="ID_525088317" CREATED="1383661876054" MODIFIED="1383661881721">
+<node TEXT="there are invalid configuration settings" ID="ID_1153713945" CREATED="1383661889397" MODIFIED="1383661894688"/>
+</node>
+<node TEXT="configuration is a user interface" ID="ID_1088732666" CREATED="1383661915012" MODIFIED="1383661919943">
+<node TEXT="it should be as easy as IPhones" ID="ID_515426021" CREATED="1383661933162" MODIFIED="1383661939189"/>
+</node>
+<node TEXT="goals of this project" ID="ID_494979273" CREATED="1383661955344" MODIFIED="1383661959700">
+<node TEXT="react gracefully to misconfiguration" ID="ID_791913350" CREATED="1383661959969" MODIFIED="1383661967659">
+<node TEXT="system should detect misconfig, not crash" ID="ID_1953995888" CREATED="1383661968040" MODIFIED="1383661974011"/>
+</node>
+<node TEXT="intuitive configuration" ID="ID_995546965" CREATED="1383662027876" MODIFIED="1383662036655">
+<node TEXT="assumptions should be documented" ID="ID_1232459601" CREATED="1383662038180" MODIFIED="1383662043366">
+<node TEXT="e.g., lower-case only values" ID="ID_460617246" CREATED="1383662043579" MODIFIED="1383662049094"/>
+</node>
+</node>
+</node>
+</node>
+<node TEXT="contributions" ID="ID_232499922" CREATED="1383662076745" MODIFIED="1383662080940">
+<node TEXT="spex" ID="ID_510003670" CREATED="1383662084344" MODIFIED="1383662086355">
+<node TEXT="automatically infer configuration constraints" ID="ID_1841801810" CREATED="1383662086624" MODIFIED="1383662093251">
+<node TEXT="static source code analysis" ID="ID_1655800611" CREATED="1383662093992" MODIFIED="1383662100738"/>
+</node>
+</node>
+<node TEXT="ues spex to" ID="ID_1459215210" CREATED="1383662118310" MODIFIED="1383662121473">
+<node TEXT="expose misconfiguration vulnerabilities" ID="ID_1953816521" CREATED="1383662121774" MODIFIED="1383662127704"/>
+<node TEXT="detect error-prone configuration design" ID="ID_31676063" CREATED="1383662127925" MODIFIED="1383662133712"/>
+</node>
+<node TEXT="improve configuration of real-world system" ID="ID_631080056" CREATED="1383662141540" MODIFIED="1383662148320">
+<node TEXT="743 vulnerabilities reported, 364 fixed" ID="ID_1129065713" CREATED="1383662180265" MODIFIED="1383663179686"/>
+<node TEXT="112 bugs reported, 80 fixed" ID="ID_1739102301" CREATED="1383662149547" MODIFIED="1383662158159"/>
+</node>
+</node>
+<node TEXT="Spex" ID="ID_1300652774" CREATED="1383662192361" MODIFIED="1383662194244">
+<node TEXT="input: source code" ID="ID_1167663530" CREATED="1383662194560" MODIFIED="1383662202748"/>
+<node TEXT="output: configuration constraints" ID="ID_1633138864" CREATED="1383662202985" MODIFIED="1383662278239"/>
+<node TEXT="architecture" ID="ID_1856853377" CREATED="1383662213136" MODIFIED="1383662215619">
+<node TEXT="mapping engine" ID="ID_1934075154" CREATED="1383662215960" MODIFIED="1383662218347">
+<node TEXT="maps configuration directive to program variables" ID="ID_8258226" CREATED="1383662225495" MODIFIED="1383662232858"/>
+<node TEXT="non-trivial problems" ID="ID_1008703145" CREATED="1383662296715" MODIFIED="1383662301589"/>
+<node TEXT="can often exploit program structure" ID="ID_1640648956" CREATED="1383662301834" MODIFIED="1383662308629">
+<node TEXT="often, mapping is structure-based" ID="ID_224056387" CREATED="1383662308905" MODIFIED="1383662321580">
+<node TEXT="a program data structure corresponds to config file" ID="ID_1071714741" CREATED="1383662321800" MODIFIED="1383662335491"/>
+</node>
+</node>
+<node TEXT="but always relies on developer annotations" ID="ID_1803144673" CREATED="1383662358198" MODIFIED="1383662371737"/>
+</node>
+<node TEXT="inference engine" ID="ID_1114371309" CREATED="1383662218583" MODIFIED="1383662224626">
+<node TEXT="static analysis of program variables" ID="ID_222538450" CREATED="1383662247014" MODIFIED="1383662267656"/>
+<node TEXT="data type inference" ID="ID_1543293939" CREATED="1383662585519" MODIFIED="1383662588650">
+<node TEXT="check how value is used in libcall/syscall" ID="ID_573634531" CREATED="1383662592095" MODIFIED="1383662599881"/>
+<node TEXT="finds, e.g., values that must name files" ID="ID_34302005" CREATED="1383662604798" MODIFIED="1383662617792"/>
+</node>
+<node TEXT="data range inference" ID="ID_702014931" CREATED="1383662619821" MODIFIED="1383662623136">
+<node TEXT="looks for comparisons with constant values" ID="ID_614896957" CREATED="1383662623412" MODIFIED="1383662628295"/>
+</node>
+<node TEXT="control dependency inference" ID="ID_909005842" CREATED="1383662646003" MODIFIED="1383662663149">
+<node TEXT="finds dependencies between two config directives" ID="ID_1000578422" CREATED="1383662667619" MODIFIED="1383662678812"/>
+<node TEXT="some values are only read when others are set" ID="ID_2058032" CREATED="1383662693047" MODIFIED="1383662704227"/>
+</node>
+</node>
+</node>
+</node>
+<node TEXT="use cases" ID="ID_1241599179" CREATED="1383662761715" MODIFIED="1383662764518">
+<node TEXT="misconfiguration injection" ID="ID_965782792" CREATED="1383662764850" MODIFIED="1383662772574">
+<node TEXT="uses discovered constraints to generate &quot;likely valid&quot; configs" ID="ID_1872241921" CREATED="1383662772858" MODIFIED="1383662789197"/>
+</node>
+<node TEXT="detect error-prone configs" ID="ID_1576222694" CREATED="1383662895411" MODIFIED="1383662905757">
+<node TEXT="inconsistencies" ID="ID_1756905975" CREATED="1383662906114" MODIFIED="1383662908493">
+<node TEXT="e.g., different units" ID="ID_477840925" CREATED="1383662928496" MODIFIED="1383662933107"/>
+<node TEXT="e.g., different case sensitivities" ID="ID_1327264166" CREATED="1383662933335" MODIFIED="1383662944068"/>
+</node>
+<node TEXT="silent overruling of user-specified values" ID="ID_1549381325" CREATED="1383662908730" MODIFIED="1383662917084"/>
+<node TEXT="undocumented constraints" ID="ID_726368121" CREATED="1383662919329" MODIFIED="1383662923668"/>
+</node>
+</node>
+<node TEXT="results" ID="ID_1251621212" CREATED="1383663063167" MODIFIED="1383663064171">
+<node TEXT="requires little annotation" ID="ID_1423787197" CREATED="1383663064543" MODIFIED="1383663069578">
+<node TEXT="10 lines on average" ID="ID_1068675142" CREATED="1383663069902" MODIFIED="1383663080914"/>
+</node>
+<node TEXT="could detect approx 25% of real-world misconfigurations in advance" ID="ID_1883238880" CREATED="1383663082798" MODIFIED="1383663107304"/>
+<node TEXT="inference engine is acurrate" ID="ID_569887920" CREATED="1383663113747" MODIFIED="1383663121575"/>
+</node>
+<node TEXT="TODO" ID="ID_742149007" CREATED="1383662162323" MODIFIED="1383662163966">
+<node TEXT="tell Silviu about this" ID="ID_936727314" CREATED="1383662164234" MODIFIED="1383662168358"/>
+<node TEXT="Talk with the developers about the tool" ID="ID_1269802052" CREATED="1383663321998" MODIFIED="1383663335393"/>
+</node>
 </node>
 </node>
 </map>
