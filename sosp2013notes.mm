@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="3"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="4"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -1194,6 +1194,67 @@
 </node>
 </node>
 <node TEXT="css.csail.mit.edu/stack/" ID="ID_169358114" CREATED="1383664905749" MODIFIED="1383664912624"/>
+</node>
+<node TEXT="Atomicity Chains" POSITION="left" ID="ID_1540609475" CREATED="1383667845372" MODIFIED="1383667850675">
+<edge COLOR="#ff00ff"/>
+<node TEXT="goals" ID="ID_933144033" CREATED="1383668292097" MODIFIED="1383668294309">
+<node TEXT="low latency for transactions" ID="ID_221855856" CREATED="1383668295897" MODIFIED="1383668303780"/>
+<node TEXT="serializability" ID="ID_55050033" CREATED="1383668308441" MODIFIED="1383668311476"/>
+</node>
+<node TEXT="key ideas" ID="ID_337620051" CREATED="1383668317456" MODIFIED="1383668319075">
+<node TEXT="transactions are known ahead of time" ID="ID_146438674" CREATED="1383668319335" MODIFIED="1383668325587"/>
+<node TEXT="thus, can do static analysis on transactions" ID="ID_1318769234" CREATED="1383668327359" MODIFIED="1383668334490"/>
+<node TEXT="often, analysis shows that seriability can be achieved without synchronization" ID="ID_28787028" CREATED="1383668557320" MODIFIED="1383668573795">
+<node TEXT="in this case, only need to wait for the first replica to ACK" ID="ID_82575762" CREATED="1383668574087" MODIFIED="1383668587242"/>
+<node TEXT="thus, lower latency" ID="ID_1439894011" CREATED="1383668587487" MODIFIED="1383668591849"/>
+<node TEXT="means that only the first replica could abort a transaction" ID="ID_515491773" CREATED="1383669021761" MODIFIED="1383669032284"/>
+</node>
+<node TEXT="if serializability cannot be achieved otherwise, use distributed transaction" ID="ID_915052651" CREATED="1383668918511" MODIFIED="1383668936754">
+<node TEXT="slow..." ID="ID_864954982" CREATED="1383668937031" MODIFIED="1383668938778"/>
+</node>
+<node TEXT="transaction chains" ID="ID_367682951" CREATED="1383668662441" MODIFIED="1383668830553">
+<node TEXT="each link of the chain is a replica" ID="ID_1189201915" CREATED="1383668666361" MODIFIED="1383668678156"/>
+</node>
+</node>
+<node TEXT="intro" ID="ID_699367784" CREATED="1383667851591" MODIFIED="1383667856146">
+<node TEXT="all-or-nothing atomicity" ID="ID_1615499115" CREATED="1383667856391" MODIFIED="1383667863769"/>
+<node TEXT="non-serializable interleaving" ID="ID_1957982413" CREATED="1383667866998" MODIFIED="1383667872305">
+<node TEXT="concurrent chains could be ordered inconsistently at different hops" ID="ID_1203888911" CREATED="1383667885429" MODIFIED="1383667897735"/>
+</node>
+<node TEXT="static analysis" ID="ID_736377118" CREATED="1383667902532" MODIFIED="1383667904967">
+<node TEXT="statically analyze all chains to be executed" ID="ID_1636755950" CREATED="1383667905292" MODIFIED="1383667916782"/>
+<node TEXT="detects non-serializable interleavings" ID="ID_930350511" CREATED="1383667917107" MODIFIED="1383667930197"/>
+<node TEXT="SC cycles" ID="ID_1142891669" CREATED="1383667982054" MODIFIED="1383667987217">
+<node TEXT="create a graph" ID="ID_1604780965" CREATED="1383668386963" MODIFIED="1383668390894">
+<node TEXT="nodes are objects in memory" ID="ID_421530146" CREATED="1383668391155" MODIFIED="1383668398174"/>
+<node TEXT="edges are dependencies" ID="ID_1180655405" CREATED="1383668398427" MODIFIED="1383668404814">
+<node TEXT="S or C" ID="ID_770501531" CREATED="1383668405090" MODIFIED="1383668406597"/>
+</node>
+</node>
+<node TEXT="S = serializable" ID="ID_1538387350" CREATED="1383667987678" MODIFIED="1383667991265"/>
+<node TEXT="C = conflict" ID="ID_1961996467" CREATED="1383667991494" MODIFIED="1383667994921"/>
+<node TEXT="A schedule is serializable if there is no cycle with both S and C edges" ID="ID_1910192425" CREATED="1383667995140" MODIFIED="1383668007328"/>
+</node>
+</node>
+</node>
+<node TEXT="Lynx" ID="ID_146941852" CREATED="1383668016260" MODIFIED="1383668018007">
+<node TEXT="user chains and system chains" ID="ID_922329129" CREATED="1383668022492" MODIFIED="1383668026471">
+<node TEXT="system chains used to keep database indices up to date" ID="ID_439681191" CREATED="1383668075336" MODIFIED="1383668090587"/>
+<node TEXT="user chains used for high-level actions" ID="ID_1350407345" CREATED="1383668113638" MODIFIED="1383668143138">
+<node TEXT="e.g., bids in an auction applications" ID="ID_809089751" CREATED="1383668121165" MODIFIED="1383668133728"/>
+</node>
+</node>
+<node TEXT="users annotate commutative operations" ID="ID_244458607" CREATED="1383668263260" MODIFIED="1383668270759"/>
+</node>
+<node TEXT="evaluation" ID="ID_264807388" CREATED="1383668457671" MODIFIED="1383668460002">
+<node TEXT="microblogging prototype" ID="ID_691764475" CREATED="1383668460574" MODIFIED="1383668469721">
+<node TEXT="built a twitter-like system" ID="ID_1089564772" CREATED="1383668469974" MODIFIED="1383668475889"/>
+<node TEXT="one table for tweets" ID="ID_1697154203" CREATED="1383668480652" MODIFIED="1383668483896"/>
+<node TEXT="one table for the follow-graph" ID="ID_1390324139" CREATED="1383668484133" MODIFIED="1383668488664"/>
+<node TEXT="timeline = tweets JOIN follow-graph" ID="ID_298657296" CREATED="1383668495116" MODIFIED="1383668507662"/>
+<node TEXT="tables are shareded and replicated" ID="ID_1122293386" CREATED="1383668508972" MODIFIED="1383668525477"/>
+</node>
+</node>
 </node>
 </node>
 </map>
