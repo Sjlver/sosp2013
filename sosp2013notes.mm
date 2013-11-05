@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="11"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="1"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -894,6 +894,131 @@
 <node TEXT="a good abstraction is still elusive" ID="ID_38082014" CREATED="1383596881301" MODIFIED="1383596886961"/>
 </node>
 </node>
+</node>
+<node TEXT="Asynchronous Intrusion Recovery" POSITION="left" ID="ID_86668533" CREATED="1383658949807" MODIFIED="1383659039849">
+<edge COLOR="#7c7c00"/>
+<node TEXT="high-level idea" ID="ID_55754246" CREATED="1383659199385" MODIFIED="1383659202955">
+<node TEXT="intrusions happen" ID="ID_349384477" CREATED="1383659203320" MODIFIED="1383659206227"/>
+<node TEXT="services should be able to repair after an intrusion" ID="ID_1511713967" CREATED="1383659206448" MODIFIED="1383659215690"/>
+<node TEXT="features" ID="ID_1011578027" CREATED="1383659620331" MODIFIED="1383659625358">
+<node TEXT="asynchronous" ID="ID_47632481" CREATED="1383659625755" MODIFIED="1383659628230"/>
+<node TEXT="decentralized" ID="ID_300148473" CREATED="1383659628442" MODIFIED="1383659631749"/>
+</node>
+</node>
+<node TEXT="design" ID="ID_1465426709" CREATED="1383659275202" MODIFIED="1383659276518">
+<node TEXT="asynchronous repair" ID="ID_987867737" CREATED="1383659277002" MODIFIED="1383659281045">
+<node TEXT="can happen even if services are unavailable" ID="ID_840691782" CREATED="1383659281282" MODIFIED="1383659289365"/>
+</node>
+<node TEXT="repair happens directly within web services" ID="ID_1613083608" CREATED="1383659290145" MODIFIED="1383659298812">
+<node TEXT="no centralised control needed" ID="ID_666038631" CREATED="1383659299072" MODIFIED="1383659303883"/>
+</node>
+</node>
+<node TEXT="prototype" ID="ID_1984164995" CREATED="1383659308568" MODIFIED="1383659312227">
+<node TEXT="Aire" ID="ID_1543832575" CREATED="1383659312872" MODIFIED="1383659314011"/>
+<node TEXT="works with Django web services" ID="ID_1907383319" CREATED="1383659314223" MODIFIED="1383659320466"/>
+<node TEXT="experiments" ID="ID_42331186" CREATED="1383659344653" MODIFIED="1383659346513">
+<node TEXT="modified a number of Django services" ID="ID_38453792" CREATED="1383659346781" MODIFIED="1383659354480">
+<node TEXT="AskBot" ID="ID_672357678" CREATED="1383659354685" MODIFIED="1383659356704">
+<node TEXT="a forum" ID="ID_152429382" CREATED="1383659548823" MODIFIED="1383659551555"/>
+</node>
+<node TEXT="OAuth Provider" ID="ID_101847667" CREATED="1383659356917" MODIFIED="1383659360080"/>
+<node TEXT="DPaste" ID="ID_215760934" CREATED="1383659360316" MODIFIED="1383659366048">
+<node TEXT="a place where people can post code snippets" ID="ID_355931817" CREATED="1383659553111" MODIFIED="1383659561306"/>
+</node>
+</node>
+<node TEXT="Introduced a vulnerability in the OAuth provider" ID="ID_1406929303" CREATED="1383659396186" MODIFIED="1383659405125">
+<node TEXT="thus, attacker got full access to the service" ID="ID_1235782424" CREATED="1383659405857" MODIFIED="1383659431963"/>
+</node>
+<node TEXT="OAuth provider then initiates recovery" ID="ID_79409948" CREATED="1383659433800" MODIFIED="1383659440370">
+<node TEXT="AskBot removes posts by attacker" ID="ID_1154098247" CREATED="1383659445703" MODIFIED="1383659454881"/>
+<node TEXT="DPaste removes code snippets created by attacker" ID="ID_156806902" CREATED="1383659455118" MODIFIED="1383659463584"/>
+</node>
+<node TEXT="overhead" ID="ID_852685804" CREATED="1383659473588" MODIFIED="1383659475432">
+<node TEXT="roughly 20% less throughput" ID="ID_1191058187" CREATED="1383659475725" MODIFIED="1383659481600"/>
+<node TEXT="5-9 KB storage per request" ID="ID_1164512064" CREATED="1383659481860" MODIFIED="1383659494823"/>
+</node>
+</node>
+</node>
+</node>
+<node TEXT="Crash Consistency" POSITION="left" ID="ID_456835501" CREATED="1383659993611" MODIFIED="1383659997598">
+<edge COLOR="#ff0000"/>
+<node TEXT="problem" ID="ID_131427476" CREATED="1383660008362" MODIFIED="1383660010053">
+<node TEXT="fsync is very expensive, needs to flush disk cache" ID="ID_1758493239" CREATED="1383660010377" MODIFIED="1383660365350"/>
+<node TEXT="crash consistency is expensive" ID="ID_1069629824" CREATED="1383660020257" MODIFIED="1383660025268"/>
+<node TEXT="file systems conflate ordering and durability" ID="ID_1121511388" CREATED="1383660030297" MODIFIED="1383660038228">
+<node TEXT="writes are ordered, depend on each other" ID="ID_1828368498" CREATED="1383660039968" MODIFIED="1383660048394"/>
+<node TEXT="crash consistency needs ordering" ID="ID_1733645103" CREATED="1383660213125" MODIFIED="1383660219671"/>
+<node TEXT="no way to guarantee ordering only" ID="ID_764382252" CREATED="1383660220029" MODIFIED="1383660231151">
+<node TEXT="calls like fsync guarantee ordering *and* durability" ID="ID_1846386205" CREATED="1383660231403" MODIFIED="1383660242950"/>
+<node TEXT="thus they are expensive" ID="ID_1968723356" CREATED="1383660243162" MODIFIED="1383660247126"/>
+</node>
+</node>
+</node>
+<node TEXT="OptFS" ID="ID_721772137" CREATED="1383660092317" MODIFIED="1383660095344">
+<node TEXT="Optimistic File System" ID="ID_24787460" CREATED="1383660095524" MODIFIED="1383660100143"/>
+<node TEXT="decouples ordering and durability" ID="ID_89687398" CREATED="1383660103132" MODIFIED="1383660109583"/>
+<node TEXT="trades freshness for performance" ID="ID_475573510" CREATED="1383660109811" MODIFIED="1383660114374"/>
+<node TEXT="techniques" ID="ID_1064463684" CREATED="1383660119315" MODIFIED="1383660120918">
+<node TEXT="checksums" ID="ID_1577650240" CREATED="1383660121155" MODIFIED="1383660123542">
+<node TEXT="Journal commits contain checksum over data and journaling metadata" ID="ID_319448900" CREATED="1383660808877" MODIFIED="1383660822479"/>
+<node TEXT="thus, we can check whether journaling made it to disk" ID="ID_1682878945" CREATED="1383660823124" MODIFIED="1383660850638"/>
+</node>
+<node TEXT="delayed writes" ID="ID_1156561464" CREATED="1383660123730" MODIFIED="1383660126365">
+<node TEXT="metadata writes are delayed until the affected blocks are no more in the disk cache" ID="ID_1101888518" CREATED="1383660911758" MODIFIED="1383660925089"/>
+</node>
+<node TEXT="strong crash consistency" ID="ID_26760121" CREATED="1383660126586" MODIFIED="1383660134565"/>
+</node>
+<node TEXT="new primitive" ID="ID_159300640" CREATED="1383660136146" MODIFIED="1383660140341">
+<node TEXT="osync" ID="ID_131008660" CREATED="1383660141121" MODIFIED="1383660142325">
+<node TEXT="guarantees only odering, not durability" ID="ID_53049155" CREATED="1383660142528" MODIFIED="1383660152452"/>
+</node>
+<node TEXT="dsync" ID="ID_179338404" CREATED="1383661002440" MODIFIED="1383661004699">
+<node TEXT="provides durability" ID="ID_1094208548" CREATED="1383661006872" MODIFIED="1383661009939"/>
+<node TEXT="fsync = osync + dsync" ID="ID_1483426159" CREATED="1383661010639" MODIFIED="1383661017154"/>
+</node>
+</node>
+</node>
+<node TEXT="Journaling" ID="ID_443482027" CREATED="1383660164640" MODIFIED="1383660166259">
+<node TEXT="before updating the FS, write a note describing the update" ID="ID_1051772448" CREATED="1383660166711" MODIFIED="1383660178298"/>
+<node TEXT="ensure note is safely on disk before performing update" ID="ID_295309896" CREATED="1383660179126" MODIFIED="1383660191041"/>
+<node TEXT="disk caches are bad for ordering" ID="ID_1873654932" CREATED="1383660288200" MODIFIED="1383660299842">
+<node TEXT="because disks might reorder writes in the cache" ID="ID_1483435414" CREATED="1383660300247" MODIFIED="1383660311001"/>
+<node TEXT="thus, fsync needs to flush write buffer" ID="ID_1713816413" CREATED="1383660311222" MODIFIED="1383660327150">
+<icon BUILTIN="smily_bad"/>
+</node>
+</node>
+</node>
+<node TEXT="probabilistic crash consistency" ID="ID_540551456" CREATED="1383660409535" MODIFIED="1383660415394">
+<node TEXT="ext3 did not enable flushes by default, for many years" ID="ID_1445001144" CREATED="1383660415751" MODIFIED="1383660426897"/>
+<node TEXT="this was often OK" ID="ID_20756533" CREATED="1383660427103" MODIFIED="1383660430905">
+<node TEXT="crashes sometimes did not lead to inconsistency" ID="ID_464846969" CREATED="1383660442246" MODIFIED="1383660452784"/>
+</node>
+<node TEXT="works well for read-intensive workloads" ID="ID_1080477046" CREATED="1383660593788" MODIFIED="1383660601054"/>
+<node TEXT="does not work well for databases" ID="ID_1301313030" CREATED="1383660601267" MODIFIED="1383660605270"/>
+</node>
+<node TEXT="prototype" ID="ID_504785466" CREATED="1383661033934" MODIFIED="1383661037193">
+<node TEXT="3000 lines of code modified from ext4" ID="ID_1187394440" CREATED="1383661037518" MODIFIED="1383661045945"/>
+<node TEXT="does OptFS preserve consistency?" ID="ID_1119466036" CREATED="1383661079034" MODIFIED="1383661085902">
+<node TEXT="yes, never found inconsistency in 400 random crashes" ID="ID_444914025" CREATED="1383661090634" MODIFIED="1383661102500"/>
+</node>
+<node TEXT="how does OptFS perform?" ID="ID_1290983969" CREATED="1383661107297" MODIFIED="1383661138155">
+<node TEXT="4-10x better than ext4 in some workloads" ID="ID_307721192" CREATED="1383661112041" MODIFIED="1383661129923"/>
+</node>
+<node TEXT="Can one build application-level consistency?" ID="ID_1728267841" CREATED="1383661138567" MODIFIED="1383661146394">
+<node TEXT="experiment" ID="ID_1154999195" CREATED="1383661231297" MODIFIED="1383661232923">
+<node TEXT="modified sqlite, replace all fsync with osync" ID="ID_1528424672" CREATED="1383661152510" MODIFIED="1383661207630"/>
+<node TEXT="start with a consistent disk image" ID="ID_642595325" CREATED="1383661209515" MODIFIED="1383661214965"/>
+<node TEXT="drop all writes after some randomly chosen point" ID="ID_423323075" CREATED="1383661167613" MODIFIED="1383661226061"/>
+<node TEXT="replay writes on original disk image" ID="ID_1710951056" CREATED="1383661175252" MODIFIED="1383661182215"/>
+<node TEXT="examine whether the result is consistent" ID="ID_553927521" CREATED="1383661182419" MODIFIED="1383661188903"/>
+</node>
+<node TEXT="zero inconsistencies found" ID="ID_1201940974" CREATED="1383661247968" MODIFIED="1383661254875"/>
+<node TEXT="some inconsistencies found with ext4 without flushes" ID="ID_1179209334" CREATED="1383661268582" MODIFIED="1383661278641"/>
+<node TEXT="OptFS recovers to initial image more often than ext4 with flushes" ID="ID_1259681566" CREATED="1383661288269" MODIFIED="1383661305111"/>
+<node TEXT="But OptFS is 10x faster than ext4 with flushes" ID="ID_771402782" CREATED="1383661308804" MODIFIED="1383661319390"/>
+</node>
+</node>
+<node TEXT="github.com/vijay03/optfs" ID="ID_9658348" CREATED="1383661453578" MODIFIED="1383661465661"/>
 </node>
 </node>
 </map>
