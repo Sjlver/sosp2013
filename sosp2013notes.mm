@@ -49,7 +49,7 @@
 </stylenode>
 </map_styles>
 </hook>
-<hook NAME="AutomaticEdgeColor" COUNTER="11"/>
+<hook NAME="AutomaticEdgeColor" COUNTER="12"/>
 <node TEXT="Intro" POSITION="right" ID="ID_635546985" CREATED="1383573244947" MODIFIED="1383573251726">
 <edge COLOR="#ff0000"/>
 <node TEXT="18% acceptance rate" ID="ID_488885926" CREATED="1383573264970" MODIFIED="1383573274381"/>
@@ -2211,6 +2211,99 @@
 </node>
 <node TEXT="validation overhead" ID="ID_1663230351" CREATED="1383751891408" MODIFIED="1383751894524"/>
 </node>
+</node>
+</node>
+<node TEXT="Discretized Streams" POSITION="left" ID="ID_1984780121" CREATED="1383753905297" MODIFIED="1383753957823">
+<edge COLOR="#7c7c00"/>
+<node TEXT="motivation" ID="ID_1152418972" CREATED="1383753907919" MODIFIED="1383753909322">
+<node TEXT="need to process stream data" ID="ID_855790648" CREATED="1383753909583" MODIFIED="1383753914714"/>
+<node TEXT="require short end-to-end latency" ID="ID_119876329" CREATED="1383753915006" MODIFIED="1383753928409"/>
+<node TEXT="systems use many nodes" ID="ID_1332234213" CREATED="1383753936581" MODIFIED="1383753939768"/>
+<node TEXT="hard to deal with faults and stragglers" ID="ID_1853822507" CREATED="1383753929957" MODIFIED="1383753935681"/>
+</node>
+<node TEXT="traditional streaming systems" ID="ID_1043736100" CREATED="1383753992577" MODIFIED="1383753996868">
+<node TEXT="continuous operator model" ID="ID_1285094291" CREATED="1383753997137" MODIFIED="1383754001916">
+<node TEXT="operators maintain in-memory mutable state" ID="ID_563931126" CREATED="1383754002233" MODIFIED="1383754010012"/>
+<node TEXT="problem: mutable state is lost on failures" ID="ID_1379174516" CREATED="1383754015864" MODIFIED="1383754021475"/>
+</node>
+<node TEXT="node replication for fault-tolerance" ID="ID_537998154" CREATED="1383754033351" MODIFIED="1383754040281">
+<node TEXT="hot spares process same data as original nodes" ID="ID_1988229553" CREATED="1383754043862" MODIFIED="1383754056528"/>
+<node TEXT="synchronization needed for consistency" ID="ID_1961124937" CREATED="1383754057733" MODIFIED="1383754069344"/>
+<node TEXT="on failure, spares take over" ID="ID_1998908512" CREATED="1383754071293" MODIFIED="1383754075583"/>
+<node TEXT="pro: fast failover" ID="ID_1491204716" CREATED="1383754093675" MODIFIED="1383754098926"/>
+<node TEXT="cons: high hardware cost" ID="ID_533519480" CREATED="1383754099594" MODIFIED="1383754104526">
+<node TEXT="Question: don&apos;t actually need 2x hardware" ID="ID_1393439558" CREATED="1383755712631" MODIFIED="1383755725066"/>
+</node>
+</node>
+<node TEXT="upstream backup for fault-tolerance" ID="ID_1174461558" CREATED="1383754108561" MODIFIED="1383754836790">
+<node TEXT="each node maintains backup of nodes passed downstream" ID="ID_669735477" CREATED="1383754120984" MODIFIED="1383754134868"/>
+<node TEXT="downstream nodes periodically checkpoint" ID="ID_24500786" CREATED="1383754137336" MODIFIED="1383754145075"/>
+<node TEXT="on failure, upstream node can replay backup records" ID="ID_1996717473" CREATED="1383754156590" MODIFIED="1383754168817"/>
+<node TEXT="pro: cheap" ID="ID_1577217858" CREATED="1383754171086" MODIFIED="1383754173408"/>
+<node TEXT="cons: slow recovery" ID="ID_158471260" CREATED="1383754173620" MODIFIED="1383754178464"/>
+</node>
+<node TEXT="stragglers" ID="ID_16041442" CREATED="1383754199260" MODIFIED="1383754204575">
+<node TEXT="both node replication and upstream backup don&apos;t handle stragglers well" ID="ID_726297893" CREATED="1383754204955" MODIFIED="1383754218966"/>
+<node TEXT="single stragglers will slow down spares / downstream nodes" ID="ID_668264600" CREATED="1383754226194" MODIFIED="1383754236388"/>
+</node>
+</node>
+<node TEXT="challenge" ID="ID_780225470" CREATED="1383754261703" MODIFIED="1383754266867">
+<node TEXT="stateful continuous operators" ID="ID_1831594716" CREATED="1383754267175" MODIFIED="1383754274570">
+<node TEXT="mix up computation and state" ID="ID_1982691133" CREATED="1383754274839" MODIFIED="1383754280634"/>
+</node>
+</node>
+<node TEXT="idea" ID="ID_1927714220" CREATED="1383754284558" MODIFIED="1383754287217">
+<node TEXT="make state immutable" ID="ID_1554802427" CREATED="1383754287670" MODIFIED="1383754291633"/>
+<node TEXT="computation = small deterministic stateless task" ID="ID_907024220" CREATED="1383754291836" MODIFIED="1383754301632"/>
+<node TEXT="defines clear boundaries between state and computation" ID="ID_526934742" CREATED="1383754308461" MODIFIED="1383754318039">
+<node TEXT="both can be moved around independently" ID="ID_1234938139" CREATED="1383754319444" MODIFIED="1383754326015"/>
+</node>
+<node TEXT="inspired by batch processing systems" ID="ID_1678391129" CREATED="1383754328179" MODIFIED="1383754333454">
+<node TEXT="e.g., MapReduce" ID="ID_980569883" CREATED="1383754337987" MODIFIED="1383754343061"/>
+<node TEXT="data is partitioned into small partitions" ID="ID_1745587086" CREATED="1383754343947" MODIFIED="1383754351925"/>
+<node TEXT="jobs consist of small, deterministic, stateless map/reduce tasks" ID="ID_801519367" CREATED="1383754352818" MODIFIED="1383754364988"/>
+</node>
+</node>
+<node TEXT="discretized stream processing" ID="ID_732715107" CREATED="1383754428493" MODIFIED="1383754436400">
+<node TEXT="&quot;run a streaming computation as a series of small, deterministic batch jobs&quot;" ID="ID_584253656" CREATED="1383754437436" MODIFIED="1383754449783"/>
+<node TEXT="store intermediate data in cluster memory" ID="ID_818994728" CREATED="1383754452811" MODIFIED="1383754459214"/>
+<node TEXT="good engineering for low latency" ID="ID_832695867" CREATED="1383754460171" MODIFIED="1383754470261"/>
+</node>
+<node TEXT="fine-grained lineage" ID="ID_328741445" CREATED="1383754595377" MODIFIED="1383754599148">
+<node TEXT="datasets track where data comes from" ID="ID_253325798" CREATED="1383754599393" MODIFIED="1383754609172"/>
+<node TEXT="allows to recompute lost data" ID="ID_1569424880" CREATED="1383754610153" MODIFIED="1383754616851"/>
+<node TEXT="periodic async checkpoints ensure lineage history remains small" ID="ID_1508256324" CREATED="1383754621831" MODIFIED="1383754636130"/>
+<node TEXT="on crash" ID="ID_706428485" CREATED="1383754663261" MODIFIED="1383754665960">
+<node TEXT="recompute lost data" ID="ID_1836220952" CREATED="1383754666269" MODIFIED="1383754669832"/>
+<node TEXT="can do recomputeation in parallel if there are no dependencies" ID="ID_1965344453" CREATED="1383754670060" MODIFIED="1383754679087"/>
+<node TEXT="results" ID="ID_697025978" CREATED="1383754800204" MODIFIED="1383754802823">
+<node TEXT="large clusters recover faster" ID="ID_1992612064" CREATED="1383754803107" MODIFIED="1383754830617">
+<icon BUILTIN="ksmiletris"/>
+</node>
+</node>
+</node>
+</node>
+<node TEXT="evaluation" ID="ID_359300312" CREATED="1383754843481" MODIFIED="1383754846132">
+<node TEXT="spark streaming" ID="ID_906505672" CREATED="1383754848200" MODIFIED="1383754850764">
+<node TEXT="Resilient Distributed Datasets -- NSDI 2012" ID="ID_1179553436" CREATED="1383754864367" MODIFIED="1383754878506"/>
+</node>
+<node TEXT="tested with 100 EC2 instances" ID="ID_1550637954" CREATED="1383754936170" MODIFIED="1383754946933"/>
+<node TEXT="found linear scalability" ID="ID_1985063255" CREATED="1383754947153" MODIFIED="1383754952301"/>
+<node TEXT="can recover from faults within a few windows" ID="ID_709779161" CREATED="1383755049659" MODIFIED="1383755060814"/>
+</node>
+<node TEXT="unification with batch and interactive processing" ID="ID_1890047969" CREATED="1383755100768" MODIFIED="1383755112658">
+<node TEXT="single programming model" ID="ID_67398622" CREATED="1383755112975" MODIFIED="1383755119482"/>
+<node TEXT="examples" ID="ID_737444711" CREATED="1383755125742" MODIFIED="1383755127297">
+<node TEXT="combine live streams with historic data" ID="ID_976354027" CREATED="1383755127534" MODIFIED="1383755132993"/>
+<node TEXT="interactive queries over live streams" ID="ID_1979543286" CREATED="1383755133230" MODIFIED="1383755141704"/>
+</node>
+<node TEXT="mobile millenium project" ID="ID_212527683" CREATED="1383755176643" MODIFIED="1383755182230">
+<node TEXT="does Markov chain Monte Carlo simulations" ID="ID_1733858612" CREATED="1383755182530" MODIFIED="1383755196029"/>
+<node TEXT="it was very easy to port batch Monte Carlo code to a streaming environment" ID="ID_1072560286" CREATED="1383755196225" MODIFIED="1383755221563"/>
+</node>
+</node>
+<node TEXT="open source" ID="ID_1287839129" CREATED="1383755294227" MODIFIED="1383755298446">
+<node TEXT="spark-project.org" ID="ID_1242645880" CREATED="1383755298691" MODIFIED="1383755302502"/>
 </node>
 </node>
 </node>
